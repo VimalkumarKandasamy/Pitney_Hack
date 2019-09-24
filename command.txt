@@ -1,0 +1,39 @@
+creating skeleton of bna
+
+yo hyperledger-composer:businessnetwork
+
+
+
+cd ~/fabric-dev-servers/
+./stopFabric.sh
+./teardownFabric.sh
+composer card delete --card admin@pitney_hack
+
+
+cd ~/fabric-dev-servers/
+export FABRIC_VERSION=hlfv11
+./startFabric.sh
+./createPeerAdminCard.sh
+
+
+cd
+cd pitney_hack
+composer archive create -t dir -n .
+composer network install --card PeerAdmin@hlfv1 --archiveFile pitney_hack@0.0.1.bna
+composer network start --networkName pitney_hack --networkVersion 0.0.1 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+composer card import --file networkadmin.card
+composer network ping --card admin@pitney_hack
+composer-rest-server
+
+to resart the previous rest server
+composer-rest-server -c admin@pitney_hack -n never -u true -d n -w true
+
+angularjs
+cd pitney_hack/
+yo hyperledger-composer:angular
+
+
+cd pitney_hack/
+npm start
+
+composer network upgrade -n pitney_hack -V 0.02 -c networkadmin.card
