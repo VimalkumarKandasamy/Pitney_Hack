@@ -1,6 +1,6 @@
-# pitney_hack
+# png_hack
 
-pitney bowes blockchain based shiping
+png blockchain based shiping
 
 //Commands to run the project
 
